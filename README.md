@@ -1,5 +1,12 @@
-# Learning_tool_app
+tasks from sprint 3:
+https://submit.cs50.io/users/annaannaA33/cs50/problems/2022/python/
 
+task game  War (sprint 3, part2):
+https://github.com/annaannaA33/task-card_war_game
+
+
+# Learning_tool_app
+About app:
 Adding questions mode:
 In this mode, users can add two types of questions: quiz questions and free-form text questions. A quiz question requires users to choose one correct answer from the provided options, while a free-form question requires users to enter a text response, which will be compared directly with the expected answer for correctness.
 
@@ -34,7 +41,7 @@ During the test I create and save a question in the list, so before restart the 
 
 
 ------
-List of questions:
+List of questions(For ease of adding new questions or tests, offer a questionnaire sheet):
 id,question_type,question_text,correct_answer,options,is_active,appearance_count,correct_count,total_correct_percentage
 1,free_form_question_type,Which river is the longest in the world?,Amazon River,,True,2,0,0
 2,free_form_question_type,Which river is the longest in Africa?,Nile River,,True,2,1,50
