@@ -197,3 +197,8 @@ def main_manu(question_manager, file_manager):
 
 if __name__ == "__main__":
     main()
+
+
+#tasks from sprint 3: https://submit.cs50.io/users/annaannaA33/cs50/problems/2022/python/
+
+#task game War (sprint 3, part2): https://github.com/annaannaA33/task-card_war_game
