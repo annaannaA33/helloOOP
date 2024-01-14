@@ -26,10 +26,6 @@ class MultipleChoiceQuestion(Question):
         )
         self.options = options
 
-    # question_type, question_text, options, correct_option)
-
-    def get_correct_answer(self):
-        return self.correct_answer
 
     def as_dict(self):
         return {
@@ -37,7 +33,7 @@ class MultipleChoiceQuestion(Question):
             "question_type": self.question_type,
             "question_text": self.question_text,
             "correct_answer": self.correct_answer,
-            "options": self.options,
+            "options": getattr(self, "options", None),
             "is_active": self.get_is_active(),
             "appearance_count": self.appearance_count,
             "correct_count": self.correct_count,

@@ -3,25 +3,15 @@ from FileManager import FileManager
 from QuestionManager import QuestionManager
 from Question import Question
 from random import choices
-import os, sys
+import sys
 
 
 def main():
     player = Player()
     file_manager = FileManager()
     question_manager = QuestionManager()
-
     welcome_player(player)
-    main_manu(question_manager, file_manager)
-
-
-def __init__(self, load_question_list):
-    self.load_question_list = load_question_list
-    # if 'name' in user_data:
-
-
-#     player.name = user_data['name']
-
+    main_menu(question_manager, file_manager)
 
 def start_practice(load_question_list, active_questions_list):
     while True:
@@ -31,12 +21,12 @@ def start_practice(load_question_list, active_questions_list):
             )
             break
         print("You are in practice mode")
-        print("To return to the main menu, type 'menu' or 'm'")
+        print("To return to the main menu type 'm'")
         one_question = Question.random_chose_question(active_questions_list)
 
         user_answer = input(f"{one_question.get_question_text()}:\n ")
 
-        if user_answer.lower() == "menu" or user_answer.lower() == "m":
+        if user_answer.lower().strip() == "m":
             # Return to the main menu
             print("Testing mode aborted. Returning to the main menu.")
             break
@@ -62,7 +52,7 @@ def start_test(load_question_list, active_questions_list):
     questions_asked = set()
     num_questions = 0
     print("You are in testing mode")
-    print("To return to the main menu, type 'menu' or 'm'")
+    print("To return to the main menu type 'm'")
 
     while True:
         if len(active_questions_list) < 5:
@@ -80,9 +70,9 @@ def start_test(load_question_list, active_questions_list):
     for _ in range(num_questions):
         one_question = check(questions_asked, active_questions_list)
         questions_asked.add(one_question)
-        user_answer = input(f"{one_question.get_question_text()}:\n ")
+        user_answer = input(f"{one_question.get_question_text()}:\n ").lower().strip()
 
-        if user_answer.lower() == "menu" or user_answer.lower() == "m":
+        if user_answer.lower().strip() == "m":
             print("Testing mode aborted. Returning to the main menu.")
             break
         if one_question.check_answer(one_question, user_answer):
@@ -134,13 +124,13 @@ def print_menu():
     print(f"+{'-' * (max_length + 2)}+")
 
 
-def main_manu(question_manager, file_manager):
+def main_menu(question_manager, file_manager):
     print_ruls()
 
     while True:
         print_menu()
         player_choice = input("Enter your choice: ")
-        if player_choice.lower() == "stop":
+        if player_choice.lower().strip() == "stop":
             sys.exit("Exiting the program. Goodbye!")
 
         # Add question, save question
@@ -148,7 +138,7 @@ def main_manu(question_manager, file_manager):
             new_question_list = []
             new_question_list = question_manager.add_question_menu()
             if len(new_question_list) > 0:
-                file_manager.save_questions_to_csv(new_question_list)
+                file_manager.save_new_questions(new_question_list)
                 print("The list of questions has been successfully updated")
             else:
                 print("You haven't saved any questions")
@@ -178,7 +168,7 @@ def main_manu(question_manager, file_manager):
             start_practice(load_question_list, active_questions_list)
             updated_load_question_list = load_question_list  # with updated statistics
             # Get the updated list with statistics and update file with questions
-            file_manager.save_questions_to_csv(updated_load_question_list)
+            file_manager.update_data(updated_load_question_list)
         # Test_mood
         elif player_choice == "5":
             load_question_list = []
@@ -189,7 +179,7 @@ def main_manu(question_manager, file_manager):
             updated_load_question_list = load_question_list
             # Save results using FileManager
             file_manager.save_test_results(result_string)
-            file_manager.save_questions_to_csv(load_question_list)
+            file_manager.update_data(load_question_list)
 
         else:
             print("Invalid choice. Please choose a valid option.")

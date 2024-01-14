@@ -15,39 +15,24 @@ class FileManager:
     def __init__(self):
         self.QUESTIONS_FILE = "questions.csv"
 
-    def save_questions_to_csv(self, new_question_list):
-        existing_questions = self.load_questions_from_csv()
-        all_updated_questions = []
+    
+    def save_new_questions(self, new_question_list):
+        header = ["id", "question_type", "question_text", "correct_answer", "options", "is_active", "appearance_count", "correct_count", "total_correct_percentage",]
+        if not os.path.isfile(self.QUESTIONS_FILE) or os.path.getsize(self.QUESTIONS_FILE) == 0:
+            with open(self.QUESTIONS_FILE, "w", newline="", encoding="utf-8") as file:
+                writer = csv.DictWriter(file, fieldnames=header)
+                writer.writeheader()
+        
+        with open(self.QUESTIONS_FILE, "a",  newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=["id", "question_type", "question_text", "correct_answer", "options", "is_active", "appearance_count", "correct_count", "total_correct_percentage",])
+            for question in new_question_list:
+                writer.writerow({"id": question.id, "question_type": question.question_type, "question_text": question.question_text, "correct_answer": question.correct_answer, "options": getattr(question, "options", None), "is_active": question.get_is_active(), "appearance_count": question.appearance_count, "correct_count": question.correct_count, "total_correct_percentage": question.total_correct_percentage})
 
-        for new_question in new_question_list:
-            question_added = False  # Flag to check if the question has been added to all_updated_questions
-
-            for existing_question in existing_questions:
-                if new_question.question_text == existing_question.question_text:
-                    existing_question.appearance_count += new_question.appearance_count
-                    existing_question.correct_count += new_question.correct_count
-                    question_added = (
-                        True  # Set the flag since the question has already been processed
-                    )
-                    break
-
-            if not question_added:
-                # If the question has not been added, add it to all_updated_questions
-                all_updated_questions.append(new_question)
-
-        # Now add the remaining existing questions that have not been processed
-        all_updated_questions.extend(
-            existing_question
-            for existing_question in existing_questions
-            if existing_question not in all_updated_questions
-        )
-
-        # Reset unique identifiers
-        for i, question in enumerate(all_updated_questions, start=1):
-            question.id = i
-
-        # Save the updated list of questions to the file
-        self.save_prepeared_questions_to_file(all_updated_questions)
+    def update_data(self, new_question_list):
+        all_updated_questions = new_question_list
+        for update_question in new_question_list:
+            update_question.total_correct_percentage = (update_question.correct_count / update_question.appearance_count if update_question.appearance_count > 0 else 0) * 100
+            self.save_prepeared_questions_to_file(all_updated_questions)
 
     def save_prepeared_questions_to_file(self, all_questions):
         with open(self.QUESTIONS_FILE, mode="w", newline="", encoding="utf-8") as file:
@@ -67,17 +52,7 @@ class FileManager:
             )
 
             for question in all_questions:
-                row_data = {
-                    "id": question.id,
-                    "question_type": question.question_type,
-                    "question_text": question.get_question_text(),
-                    "correct_answer": question.correct_answer,
-                    "options": getattr(question, "options", None),
-                    "is_active": question.get_is_active(),
-                    "appearance_count": question.appearance_count,
-                    "correct_count": question.correct_count,
-                    "total_correct_percentage": question.total_correct_percentage,
-                }
+                row_data = question.as_dict()
 
                 writer.writerow([row_data[field] for field in row_data])
 
@@ -90,24 +65,24 @@ class FileManager:
             for row in reader:
                 question_type = row["question_type"]
                 if question_type not in [
-                    "free_form_question_type",
-                    "multiple_choice_question_type",
+                    "free_form_q_type",
+                    "multiple_choice_q_type",
                 ]:
-                    print(f"Error: Unknown question type: {question_type}")
+                    print(f"Unknown question type: {question_type}")
                     continue
 
                 # Convert values to the required data types
-                id = int(row["id"])
+                id = (row["id"])
                 question_type = row["question_type"]
                 question_text = row["question_text"]
                 correct_answer = row["correct_answer"]
                 is_active = row["is_active"].lower() == "true"
                 appearance_count = int(row["appearance_count"])
-                correct_count = int(row["correct_count"])
-                total_correct_percentage = round(float(row["total_correct_percentage"]))
+                correct_count = int(row["correct_count"]) if row["correct_count"] is not None else 0
+                total_correct_percentage = float(row["total_correct_percentage"]) if row["total_correct_percentage"] is not None else 0
 
                 # Create a question object and add it to the list
-                if row["question_type"] == "free_form_question_type":
+                if row["question_type"] == "free_form_q_type":
                     question = FreeFormQuestion(
                         id=id,
                         question_type=question_type,
@@ -120,7 +95,7 @@ class FileManager:
                     )
                     question_list.append(question)
 
-                elif row["question_type"] == "multiple_choice_question_type":
+                elif row["question_type"] == "multiple_choice_q_type":
                     options = ast.literal_eval(row["options"]) if row["options"] else []
                     question = MultipleChoiceQuestion(
                         id=id,
@@ -141,26 +116,17 @@ class FileManager:
         # Prepare data for tabulation
         table_data = []
         for question in questions:
-            # total_correct_percentage = question.total_correct_percentage
-            correct_percentage = (
-                (question.correct_count / question.appearance_count) * 100
-                if question.appearance_count > 0
-                else 0
-            )
-
             # Use an empty string if the attribute is missing
-            correct_answer = getattr(question, "correct_answer", "")
-            options = ", ".join(getattr(question, "options", []))
+            #options = ", ".join(getattr(question, "options", []))
 
             row = [
                 question.id,
                 question.question_type,
                 "Yes" if question.is_active else "No",
                 question.question_text,
-                correct_answer,
-                options,
+                question.correct_answer,
                 question.appearance_count,
-                f"{correct_percentage:.2f} %",
+                f"{question.total_correct_percentage :.2f} %",
                 question.correct_count,
             ]
 
@@ -173,7 +139,6 @@ class FileManager:
             "Active",
             "Question",
             "Correct\nanswer",
-            "Options",
             "Appearance\n Count",
             "Correct %",
             "Total\n Correct",
@@ -183,25 +148,30 @@ class FileManager:
         ]
         print(tabulate(table_data, headers=colored_headers, tablefmt="pretty"))
 
+    def print_question(self, question):
+        print(f"ID: {question.id}")
+        print(f"Question Text: {question.question_text}")
+        print(f"Answer: {question.correct_answer}") 
+
     def question_activity_control(self):
         question_list_print = []
         question_list_print = self.load_questions_from_csv()
-        print("You are in the question activity management mode.")
+        print("You are in the question activity mode.")
         self.print_questions_table(question_list_print)
 
         while True:
             id_switch = input(
-                "Write the ID of the question you want to enable, disable, or delete (or 'main_menu' to return to the main menu): "
+                "Write the ID of the question you want to enable, disable, or delete (or 'm' to return to the main menu): "
             )
 
-            if id_switch.lower() == "main_menu" or id_switch.lower() == "m":
+            if id_switch.lower().strip() == "m":
                 # Check for changes and save if there are any
                 self.save_prepeared_questions_to_file(question_list_print)
                 print("Changes have been successfully saved.")
                 break
 
             try:
-                id_switch = int(id_switch)
+                id_switch = id_switch
                 selected_question = next(
                     (q for q in question_list_print if q.id == id_switch), None
                 )
@@ -209,25 +179,42 @@ class FileManager:
                 if selected_question:
                     switch_command = input("Choose 'enable', 'disable', or 'delete': ")
 
-                    if switch_command.lower() == "enable":
-                        selected_question.is_active = True
-                    elif switch_command.lower() == "disable":
-                        selected_question.is_active = False
-                    elif switch_command.lower() == "delete":
-                        question_list_print.remove(selected_question)
-                        print(f"Question with ID {id_switch} has been deleted.")
+                    if switch_command.lower().strip() == "enable":
+                        self.print_question(selected_question)
+                        confirm = input(f"Are you sure you want to activate question {selected_question.id}? (yes/no): ")
+                        if confirm.lower().strip() == "yes":
+                            selected_question.is_active = True
+                            print(f"Question {selected_question.id} successfully activated.")
+                        else:
+                            print("Activation canceled.")
+                    elif switch_command.lower().strip() == "disable":
+                        self.print_question(selected_question)
+                        confirm = input(f"Are you sure you want to deactivate the question {selected_question.id}? (yes/no): ")
+                        if confirm.lower().strip() == "yes":
+                            selected_question.is_active = False  
+                            print(f"Question {selected_question.id} successfully deactivated.")
+                        else:
+                            print("Deactivation canceled.")
+                    elif switch_command.lower().strip() == "delete":
+                        self.print_question(selected_question)
+                        confirm = input(f"Are you sure you want to delete the question {selected_question.id}? (yes/no): ")
 
+                        if confirm.lower().strip() == "yes":
+                            question_list_print.remove(selected_question)
+                            print(f"Question {selected_question.id} successfully has been deleted.")
+                        else:
+                            print("Deletion canceled.")
                     else:
                         print(
                             "Invalid command. Please enter 'enable', 'disable', or 'delete'."
                         )
                 else:
                     print(
-                        "Question not found. Enter a valid ID. To return to the main menu type 'm' or 'main_menu'"
+                        "Question not found. Enter a valid ID. To return to the main menu type 'm'."
                     )
             except ValueError:
                 print(
-                    "Invalid input. Please enter a valid ID or 'main_menu' to return to the main menu."
+                    "Invalid input. Please enter a valid ID or 'm' to return to the main menu."
                 )
 
     def save_test_results(self, result_string):

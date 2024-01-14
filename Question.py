@@ -1,5 +1,5 @@
 from random import choices
-
+import uuid
 
 class Question:
     def __init__(
@@ -22,7 +22,7 @@ class Question:
         self.correct_count = (
             correct_count  # Total number of correct answers for this question
         )
-        self.total_correct_percentage = 0  # Overall percentage of correct answers for this question in practice and test mood
+        self.total_correct_percentage = total_correct_percentage  # Overall percentage of correct answers for this question in practice and test mood
         self.overall_percentage = 0  # Overall Performance Across All Questions
         self.total_questions = 0  # Total number of questions
 
@@ -34,7 +34,11 @@ class Question:
 
     def get_total_questions(self):
         return self.total_questions
-
+    
+    def generate_id(self):
+        self.id = uuid.uuid4()
+        return self.id
+    
     def get_weight(self):
         incorrect_attempts = self.appearance_count - self.correct_count
         return incorrect_attempts + 100 / (self.correct_count + 100)
@@ -51,6 +55,9 @@ class Question:
 
         # If the question is not found, return the original list
         return load_question_list
+    
+    def get_correct_answer(self):
+        return self.correct_answer
 
     @classmethod
     def overall_performance(cls, question_list):
@@ -71,7 +78,7 @@ class Question:
         return active_questions_list
 
     def check_answer(self, question, user_answer):
-        return user_answer.lower() == question.correct_answer.lower()
+        return user_answer.lower().strip() == question.correct_answer.lower().strip()
 
     @classmethod
     def random_chose_question(cls, active_questions_list):
@@ -82,11 +89,7 @@ class Question:
             active_questions_list, weights=weights, k=1
         ).pop()
         return randon_chosen_question
-        # randon_chose_question  = выбираем вопрос из active_questions_list выбранный по условию задачи.
-        # the questions are chosen in such a way that the questions that are answered correctly become less likely to appear,
-        # while questions that are answered incorrectly become more likely to appear.
-        # weighted random choices.
-        # The results of the statistics on correct answers should be stored
+
 
     def as_dict(self):
         return {

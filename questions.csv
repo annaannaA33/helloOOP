@@ -1,10 +1,11 @@
 id,question_type,question_text,correct_answer,options,is_active,appearance_count,correct_count,total_correct_percentage
-1,free_form_question_type,Which river is the longest in the world?,Amazon River,,True,2,0,0
-2,free_form_question_type,Which river is the longest in Africa?,Nile River,,True,2,1,50
-3,free_form_question_type,Which river is the longest in Asia?,Yangtze River,,True,3,0,0
-4,multiple_choice_question_type,"What is the name of the world's smallest ocean basin? Answer Options: Arctic Ocean, Mediterranean Sea, Caribbean Sea",Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,0,0,0
-5,multiple_choice_question_type,"What is the chemical symbol for oxygen? Answer Options: O, H, C",O,"['H', 'C']",True,0,0,0
-6,multiple_choice_question_type,"What is the largest continent in the world? Answer Options: Asia, Africa, North America",Asia,"['Africa', 'North America']",True,0,0,0
-8,free_form_question_type,What is the capital of France?,Paris,,True,0,0,0
-9,multiple_choice_question_type,"What is the name of the tallest mountain in the world? Answer Options: Mount Everest, Mount Kilimanjaro, Mount Fuji",Mount Everest,"['Mount Kilimanjaro', 'Mount Fuji']",True,2,1,50
-10,multiple_choice_question_type,"What is the name of the largest ocean in the world? Answer Options: Pacific Ocean, Indian Ocean, Atlantic Ocean",Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,2,2,100
+7d785aca-9479-4cc6-a092-e1a2223d7cbd,free_form_q_type,Which river is the longest in the world?,Amazon,False,0,0,0
+53854967-4ffd-4a3b-b250-ea1363b24bf2,multiple_choice_q_type,What is the chemical symbol for oxygen?,O,"['H', 'C']",True,1,1,100.0
+2fd63d88-6703-4821-9af2-50a47a93e331,multiple_choice_q_type,What is the largest continent in the world?,Asia,"['Africa', 'North America']",True,2,1,50.0
+e1bb4f11-92af-4bf1-9008-06caa9488a2c,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,1,1,100.0
+3ecc09b3-856b-4899-b53f-c1293ad37d96,multiple_choice_q_type,What is the name of the tallest mountain in the world?,Everest,"['Kilimanjaro', 'Fuji']",True,2,1,50.0
+fa899734-3dc7-43b2-bd4a-e7031bffaa49,multiple_choice_q_type,What is the name of the world's smallest ocean basin?,Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,0,0,0
+81c7a53e-bbcf-428e-ae11-e603896e715a,free_form_q_type,qtext,qaaaaa,False,0,0,0
+3e576104-bdcd-458c-bb8f-8b410d4ab188,free_form_q_type,fffffff,aaaaa,False,0,0,0
+be43f32e-b022-4988-bf5b-f47a93c68440,free_form_q_type,fffffffffff,ffffffffffff,False,0,0,0
+2432143a-4dcb-457a-9d51-7010f745f9bd,multiple_choice_q_type,What is the chemical symbol for oxygen?,O,['H'],True,0,0,0
