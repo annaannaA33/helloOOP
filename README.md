@@ -27,6 +27,8 @@ In this mode, users choose the number of questions for the test, ensuring it doe
 Main Menu Navigation:
 The overall program management is centralized through the main menu. Users can seamlessly navigate between different modes by selecting the corresponding options in the main menu. This provides a user-friendly and intuitive interface, enabling users to switch effortlessly between adding questions, viewing statistics, managing question statuses, practicing, and taking tests.
 
+Before entering the statistics or question management mode, it is advisable to reduce the scale, as the table of questions is extensive.
+
 To exit the program, press 'stop' while in the main menu. Alternatively, you can use Ctrl + C, but this method does not guarantee data preservation.
 
 Steps to take before starting:

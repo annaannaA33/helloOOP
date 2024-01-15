@@ -2,7 +2,6 @@ from Question import Question
 
 
 class FreeFormQuestion(Question):
-
     def as_dict(self):
         return {
             "id": self.id,

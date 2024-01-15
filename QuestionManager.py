@@ -4,6 +4,7 @@ from FreeFormQuestion import FreeFormQuestion
 from MultipleChoiceQuestion import MultipleChoiceQuestion
 from Question import Question
 
+
 class QuestionManager:
     def __init__(self):
         self.questions = []

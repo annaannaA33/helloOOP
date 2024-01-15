@@ -6,12 +6,17 @@ from random import choices
 import sys
 
 
+class InvalidInputError(Exception):
+    pass
+
+
 def main():
     player = Player()
     file_manager = FileManager()
     question_manager = QuestionManager()
     welcome_player(player)
     main_menu(question_manager, file_manager)
+
 
 def start_practice(load_question_list, active_questions_list):
     while True:
@@ -62,10 +67,15 @@ def start_test(load_question_list, active_questions_list):
             break
         try:
             num_questions = int(input("Enter the number of questions for the test: "))
-            if num_questions <= len(active_questions_list):
-                break
+            if num_questions <= 0 or num_questions > len(active_questions_list):
+                raise InvalidInputError
+            break
         except ValueError:
-            print("not anouth questions.")
+            print(f"Please enter a number from 1 to {len(active_questions_list)}")
+        except InvalidInputError:
+            print(
+                f"Please enter a positive number less than or equal to {len(active_questions_list)}"
+            )
 
     for _ in range(num_questions):
         one_question = check(questions_asked, active_questions_list)
@@ -189,6 +199,6 @@ if __name__ == "__main__":
     main()
 
 
-#tasks from sprint 3: https://submit.cs50.io/users/annaannaA33/cs50/problems/2022/python/
+# tasks from sprint 3: https://submit.cs50.io/users/annaannaA33/cs50/problems/2022/python/
 
-#task game War (sprint 3, part2): https://github.com/annaannaA33/task-card_war_game
+# task game War (sprint 3, part2): https://github.com/annaannaA33/task-card_war_game

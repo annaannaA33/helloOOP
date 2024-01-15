@@ -1,11 +1,15 @@
 id,question_type,question_text,correct_answer,options,is_active,appearance_count,correct_count,total_correct_percentage
-7d785aca-9479-4cc6-a092-e1a2223d7cbd,free_form_q_type,Which river is the longest in the world?,Amazon,False,0,0,0
-53854967-4ffd-4a3b-b250-ea1363b24bf2,multiple_choice_q_type,What is the chemical symbol for oxygen?,O,"['H', 'C']",True,1,1,100.0
-2fd63d88-6703-4821-9af2-50a47a93e331,multiple_choice_q_type,What is the largest continent in the world?,Asia,"['Africa', 'North America']",True,2,1,50.0
-e1bb4f11-92af-4bf1-9008-06caa9488a2c,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,1,1,100.0
-3ecc09b3-856b-4899-b53f-c1293ad37d96,multiple_choice_q_type,What is the name of the tallest mountain in the world?,Everest,"['Kilimanjaro', 'Fuji']",True,2,1,50.0
-fa899734-3dc7-43b2-bd4a-e7031bffaa49,multiple_choice_q_type,What is the name of the world's smallest ocean basin?,Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,0,0,0
-81c7a53e-bbcf-428e-ae11-e603896e715a,free_form_q_type,qtext,qaaaaa,False,0,0,0
-3e576104-bdcd-458c-bb8f-8b410d4ab188,free_form_q_type,fffffff,aaaaa,False,0,0,0
-be43f32e-b022-4988-bf5b-f47a93c68440,free_form_q_type,fffffffffff,ffffffffffff,False,0,0,0
-2432143a-4dcb-457a-9d51-7010f745f9bd,multiple_choice_q_type,What is the chemical symbol for oxygen?,O,['H'],True,0,0,0
+03a8908e-9a81-4b7e-8149-34399d06bc35,free_form_q_type,Which river is the longest in Africa?,Nile,,True,2,1,50.0
+a847cdea-01e4-4f56-9f1b-80cff66a5c6d,free_form_q_type,Which river is the longest in Asia?,Yangtze,,True,1,1,100.0
+d0bce567-049a-4194-807c-15a049f3615a,free_form_q_type,What is the capital of France?,Paris,,True,1,1,100.0
+27bb3227-e3ca-4450-b2a5-592e6d1a1134,free_form_q_type,What is the capital of Lithuania?,Vilnius,,True,0,0,0
+4c18b89c-d2c3-45c0-a0bf-c9ed612f9808,free_form_q_type,What is the chemical symbol for oxygen?,O,,True,2,2,100.0
+46ad73e4-941c-44a9-ac6b-581f877ac963,free_form_q_type,Which river is the longest in the world?,Amazon,,False,0,0,0
+57837ca2-68bb-4f76-86c8-6a6d6c0ff95c,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,2,0,0.0
+3bb470ec-0ef5-4f75-a315-05d3dcc000aa,multiple_choice_q_type,What is the name of the tallest mountain in the world?,Everest,"['Kilimanjaro', 'Fuji']",True,4,2,50.0
+aca08bf7-fb50-4be0-9ffd-cd1085725549,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Arctic Ocean']",True,0,0,0
+2906b42c-af59-45b0-b53c-0b8a9a13e1f0,multiple_choice_q_type,What is the name of the world's smallest ocean basin?,Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,1,1,100.0
+37eef188-81f6-4e68-b98b-6d096b1974f1,multiple_choice_q_type,What is the largest continent in the world?,Asia,"['North America', 'Africa']",True,1,1,100.0
+f916f9bd-dd1e-40c9-9622-177c1143a1c9,free_form_q_type,dddddddddd,dddddddddssss,,True,1,0,0.0
+a657ebfc-f0f2-4e11-9956-1cd778b0f2db,free_form_q_type,Which river is the longest in the world?,Amazon,,True,1,0,0.0
+

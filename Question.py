@@ -1,6 +1,7 @@
 from random import choices
 import uuid
 
+
 class Question:
     def __init__(
         self,
@@ -28,17 +29,17 @@ class Question:
 
     def get_question_text(self):
         return self.question_text
-    
+
     def get_is_active(self):
         return self.is_active
 
     def get_total_questions(self):
         return self.total_questions
-    
+
     def generate_id(self):
         self.id = uuid.uuid4()
         return self.id
-    
+
     def get_weight(self):
         incorrect_attempts = self.appearance_count - self.correct_count
         return incorrect_attempts + 100 / (self.correct_count + 100)
@@ -55,7 +56,7 @@ class Question:
 
         # If the question is not found, return the original list
         return load_question_list
-    
+
     def get_correct_answer(self):
         return self.correct_answer
 
@@ -89,7 +90,6 @@ class Question:
             active_questions_list, weights=weights, k=1
         ).pop()
         return randon_chosen_question
-
 
     def as_dict(self):
         return {

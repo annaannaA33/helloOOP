@@ -26,7 +26,6 @@ class MultipleChoiceQuestion(Question):
         )
         self.options = options
 
-
     def as_dict(self):
         return {
             "id": self.id,

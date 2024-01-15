@@ -15,30 +15,30 @@ class FileManager:
     def __init__(self):
         self.QUESTIONS_FILE = "questions.csv"
 
-    
     def save_new_questions(self, new_question_list):
-        header = ["id", "question_type", "question_text", "correct_answer", "options", "is_active", "appearance_count", "correct_count", "total_correct_percentage",]
-        if not os.path.isfile(self.QUESTIONS_FILE) or os.path.getsize(self.QUESTIONS_FILE) == 0:
+        header = [
+            "id",
+            "question_type",
+            "question_text",
+            "correct_answer",
+            "options",
+            "is_active",
+            "appearance_count",
+            "correct_count",
+            "total_correct_percentage",
+        ]
+        if (
+            not os.path.isfile(self.QUESTIONS_FILE)
+            or os.path.getsize(self.QUESTIONS_FILE) == 0
+        ):
             with open(self.QUESTIONS_FILE, "w", newline="", encoding="utf-8") as file:
                 writer = csv.DictWriter(file, fieldnames=header)
                 writer.writeheader()
-        
-        with open(self.QUESTIONS_FILE, "a",  newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=["id", "question_type", "question_text", "correct_answer", "options", "is_active", "appearance_count", "correct_count", "total_correct_percentage",])
-            for question in new_question_list:
-                writer.writerow({"id": question.id, "question_type": question.question_type, "question_text": question.question_text, "correct_answer": question.correct_answer, "options": getattr(question, "options", None), "is_active": question.get_is_active(), "appearance_count": question.appearance_count, "correct_count": question.correct_count, "total_correct_percentage": question.total_correct_percentage})
 
-    def update_data(self, new_question_list):
-        all_updated_questions = new_question_list
-        for update_question in new_question_list:
-            update_question.total_correct_percentage = (update_question.correct_count / update_question.appearance_count if update_question.appearance_count > 0 else 0) * 100
-            self.save_prepeared_questions_to_file(all_updated_questions)
-
-    def save_prepeared_questions_to_file(self, all_questions):
-        with open(self.QUESTIONS_FILE, mode="w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(
-                [
+        with open(self.QUESTIONS_FILE, "a", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(
+                file,
+                fieldnames=[
                     "id",
                     "question_type",
                     "question_text",
@@ -48,13 +48,39 @@ class FileManager:
                     "appearance_count",
                     "correct_count",
                     "total_correct_percentage",
-                ]
+                ],
             )
+            for question in new_question_list:
+                writer.writerow(question.as_dict())
 
+    def update_data(self, new_question_list):
+        all_updated_questions = new_question_list
+        for update_question in new_question_list:
+            update_question.total_correct_percentage = (
+                update_question.correct_count / update_question.appearance_count
+                if update_question.appearance_count > 0
+                else 0
+            ) * 100
+            self.save(all_updated_questions)
+
+    # save new data to the file
+    def save(self, all_questions):
+        header = [
+            "id",
+            "question_type",
+            "question_text",
+            "correct_answer",
+            "options",
+            "is_active",
+            "appearance_count",
+            "correct_count",
+            "total_correct_percentage",
+        ]
+        with open(self.QUESTIONS_FILE, "w", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=header)
+            writer.writeheader()
             for question in all_questions:
-                row_data = question.as_dict()
-
-                writer.writerow([row_data[field] for field in row_data])
+                writer.writerow(question.as_dict())
 
     def load_questions_from_csv(self):
         # Load questions from the file
@@ -72,14 +98,20 @@ class FileManager:
                     continue
 
                 # Convert values to the required data types
-                id = (row["id"])
+                id = row["id"]
                 question_type = row["question_type"]
                 question_text = row["question_text"]
                 correct_answer = row["correct_answer"]
                 is_active = row["is_active"].lower() == "true"
                 appearance_count = int(row["appearance_count"])
-                correct_count = int(row["correct_count"]) if row["correct_count"] is not None else 0
-                total_correct_percentage = float(row["total_correct_percentage"]) if row["total_correct_percentage"] is not None else 0
+                correct_count = (
+                    int(row["correct_count"]) if row["correct_count"] is not None else 0
+                )
+                total_correct_percentage = (
+                    float(row["total_correct_percentage"])
+                    if row["total_correct_percentage"] is not None
+                    else 0
+                )
 
                 # Create a question object and add it to the list
                 if row["question_type"] == "free_form_q_type":
@@ -117,7 +149,7 @@ class FileManager:
         table_data = []
         for question in questions:
             # Use an empty string if the attribute is missing
-            #options = ", ".join(getattr(question, "options", []))
+            # options = ", ".join(getattr(question, "options", []))
 
             row = [
                 question.id,
@@ -126,8 +158,8 @@ class FileManager:
                 question.question_text,
                 question.correct_answer,
                 question.appearance_count,
-                f"{question.total_correct_percentage :.2f} %",
                 question.correct_count,
+                f"{question.total_correct_percentage :.2f} %",
             ]
 
             table_data.append(row)
@@ -140,8 +172,8 @@ class FileManager:
             "Question",
             "Correct\nanswer",
             "Appearance\n Count",
-            "Correct %",
             "Total\n Correct",
+            "Correct %",
         ]
         colored_headers = [
             f"{Fore.GREEN}{header}{Style.RESET_ALL}" for header in headers
@@ -151,7 +183,7 @@ class FileManager:
     def print_question(self, question):
         print(f"ID: {question.id}")
         print(f"Question Text: {question.question_text}")
-        print(f"Answer: {question.correct_answer}") 
+        print(f"Answer: {question.correct_answer}")
 
     def question_activity_control(self):
         question_list_print = []
@@ -166,7 +198,7 @@ class FileManager:
 
             if id_switch.lower().strip() == "m":
                 # Check for changes and save if there are any
-                self.save_prepeared_questions_to_file(question_list_print)
+                self.save(question_list_print)
                 print("Changes have been successfully saved.")
                 break
 
@@ -181,27 +213,38 @@ class FileManager:
 
                     if switch_command.lower().strip() == "enable":
                         self.print_question(selected_question)
-                        confirm = input(f"Are you sure you want to activate question {selected_question.id}? (yes/no): ")
-                        if confirm.lower().strip() == "yes":
+                        confirm = input(
+                            f"Are you sure you want to activate question {selected_question.id}? (y/n): "
+                        )
+                        if confirm.lower().strip() == "y":
                             selected_question.is_active = True
-                            print(f"Question {selected_question.id} successfully activated.")
+                            print(
+                                f"Question {selected_question.id} successfully activated."
+                            )
                         else:
                             print("Activation canceled.")
                     elif switch_command.lower().strip() == "disable":
                         self.print_question(selected_question)
-                        confirm = input(f"Are you sure you want to deactivate the question {selected_question.id}? (yes/no): ")
-                        if confirm.lower().strip() == "yes":
-                            selected_question.is_active = False  
-                            print(f"Question {selected_question.id} successfully deactivated.")
+                        confirm = input(
+                            f"Are you sure you want to deactivate the question {selected_question.id}? (y/n): "
+                        )
+                        if confirm.lower().strip() == "y":
+                            selected_question.is_active = False
+                            print(
+                                f"Question {selected_question.id} successfully deactivated."
+                            )
                         else:
                             print("Deactivation canceled.")
                     elif switch_command.lower().strip() == "delete":
                         self.print_question(selected_question)
-                        confirm = input(f"Are you sure you want to delete the question {selected_question.id}? (yes/no): ")
-
-                        if confirm.lower().strip() == "yes":
+                        confirm = input(
+                            f"Are you sure you want to delete the question {selected_question.id}? (y/n): "
+                        )
+                        if confirm.lower().strip() == "y":
                             question_list_print.remove(selected_question)
-                            print(f"Question {selected_question.id} successfully has been deleted.")
+                            print(
+                                f"Question {selected_question.id} successfully has been deleted."
+                            )
                         else:
                             print("Deletion canceled.")
                     else:
