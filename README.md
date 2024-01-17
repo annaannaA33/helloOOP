@@ -40,17 +40,18 @@ pip install pytest
 Application testing:
 During the test I create and save a question in the list, so before restart the test it is important to delete the created question.
 
-
-
 ------
 List of questions(For ease of adding new questions or tests, offer a questionnaire sheet):
 id,question_type,question_text,correct_answer,options,is_active,appearance_count,correct_count,total_correct_percentage
-1,free_form_question_type,Which river is the longest in the world?,Amazon River,,True,2,0,0
-2,free_form_question_type,Which river is the longest in Africa?,Nile River,,True,2,1,50
-3,free_form_question_type,Which river is the longest in Asia?,Yangtze River,,True,3,0,0
-4,multiple_choice_question_type,"What is the name of the world's smallest ocean basin? Answer Options: Arctic Ocean, Mediterranean Sea, Caribbean Sea",Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,0,0,0
-5,multiple_choice_question_type,"What is the chemical symbol for oxygen? Answer Options: O, H, C",O,"['H', 'C']",True,0,0,0
-6,multiple_choice_question_type,"What is the largest continent in the world? Answer Options: Asia, Africa, North America",Asia,"['Africa', 'North America']",True,0,0,0
-8,free_form_question_type,What is the capital of France?,Paris,,True,0,0,0
-9,multiple_choice_question_type,"What is the name of the tallest mountain in the world? Answer Options: Mount Everest, Mount Kilimanjaro, Mount Fuji",Mount Everest,"['Mount Kilimanjaro', 'Mount Fuji']",True,2,1,50
-10,multiple_choice_question_type,"What is the name of the largest ocean in the world? Answer Options: Pacific Ocean, Indian Ocean, Atlantic Ocean",Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,2,2,100
+d184bbf8-5d36-4f7b-8439-755281a38ddb,free_form_q_type,dddddddd,dddddddddd,,True,0,0,0
+03a8908e-9a81-4b7e-8149-34399d06bc35,free_form_q_type,Which river is the longest in Africa?,Nile,,True,0,0,0
+a847cdea-01e4-4f56-9f1b-80cff66a5c6d,free_form_q_type,Which river is the longest in Asia?,Yangtze,,True,0,0,0
+d0bce567-049a-4194-807c-15a049f3615a,free_form_q_type,What is the capital of France?,Paris,,True,0,0,0
+27bb3227-e3ca-4450-b2a5-592e6d1a1134,free_form_q_type,What is the capital of Lithuania?,Vilnius,,True,0,0,0
+4c18b89c-d2c3-45c0-a0bf-c9ed612f9808,free_form_q_type,What is the chemical symbol for oxygen?,O,,True,0,0,0
+46ad73e4-941c-44a9-ac6b-581f877ac963,free_form_q_type,Which river is the longest in the world?,Amazon,,True,0,0,0
+57837ca2-68bb-4f76-86c8-6a6d6c0ff95c,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Atlantic Ocean']",True,0,0,0
+3bb470ec-0ef5-4f75-a315-05d3dcc000aa,multiple_choice_q_type,hat is the name of the tallest mountain in the world?,Everest,"['Kilimanjaro', 'Fuji']",True,0,0,0
+aca08bf7-fb50-4be0-9ffd-cd1085725549,multiple_choice_q_type,What is the name of the largest ocean in the world?,Pacific Ocean,"['Indian Ocean', 'Arctic Ocean']",True,0,0,0
+2906b42c-af59-45b0-b53c-0b8a9a13e1f0,multiple_choice_q_type,What is the name of the world's smallest ocean basin?,Arctic Ocean,"['Mediterranean Sea', 'Caribbean Sea']",True,0,0,0
+37eef188-81f6-4e68-b98b-6d096b1974f1,multiple_choice_q_type,What is the largest continent in the world?,Asia,"['North America', 'Africa']",True,0,0,0
